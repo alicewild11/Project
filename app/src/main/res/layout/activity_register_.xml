@@ -6,4 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".Register_Activity">
 
+
+    <!--including the navigation bar on the register page-->
+    <include
+        android:id="@+id/navigationbar"
+        layout="@layout/navigationbar"/>
+    
+    <!--linear layout: view group that aligns
+    all children in a single direction, vertically or horizontally-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/navigationbar"
+        android:padding="16dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register New Account"
+            android:fontFamily="sans-serif-light"
+            android:textSize="20dp"
+            android:textColor="#253237"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:id="@+id/username"
+            android:hint="Name"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/emailAddress"
+        android:inputType="textEmailAddress"
+        android:hint="Email Address"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:id="@+id/password"
+            android:inputType="textEmailAddress"
+            android:hint="Password"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register Account"
+            android:id="@+id/btn_register"
+            android:backgroundTint="#C2DFE3"
+            android:layout_marginTop="10dp"
+            android:textColor="#253237"
+            android:fontFamily="sans-serif-light"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
 </RelativeLayout>
