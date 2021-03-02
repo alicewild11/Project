@@ -2,9 +2,12 @@ package com.example.projectapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -34,6 +37,11 @@ public class Register_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_);
 
+        Toolbar toolbar = findViewById(R.id.navigationbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Register");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //finding the view by the ID stated in xml file
         username = findViewById(R.id.username);
         email = findViewById(R.id.emailAddress);
@@ -42,6 +50,23 @@ public class Register_Activity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance();
+
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String txt_username = username.getText().toString();
+                String txt_email = email.getText().toString();
+                String txt_password = password.getText().toString();
+
+                if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
+                    Toast.makeText(Register_Activity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+                } else if (txt_password.length() < 6 ){
+                    Toast.makeText(Register_Activity.this, "Password Must Be A Minimum of Six Characters", Toast.LENGTH_SHORT).show();
+                } else {
+                    register(txt_username, txt_email, txt_password);
+                }
+            }
+        });
 
 
 
