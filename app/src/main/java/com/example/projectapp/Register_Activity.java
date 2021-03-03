@@ -1,15 +1,15 @@
 package com.example.projectapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public class Register_Activity extends AppCompatActivity {
 
-    MaterialEditText username, email, password;
+    MaterialEditText username, email, password, block, flat, course;
     Button btn_register;
 
     FirebaseAuth auth;
@@ -46,6 +46,9 @@ public class Register_Activity extends AppCompatActivity {
         username = findViewById(R.id.username);
         email = findViewById(R.id.emailAddress);
         password = findViewById(R.id.password);
+        block = findViewById(R.id.block);
+        flat = findViewById(R.id.flat);
+        course = findViewById(R.id.course);
         btn_register = findViewById(R.id.btn_register);
 
         // Initialize Firebase Auth
@@ -57,13 +60,16 @@ public class Register_Activity extends AppCompatActivity {
                 String txt_username = username.getText().toString();
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
+                String txt_block = block.getText().toString();
+                String txt_flat = flat.getText().toString();
+                String txt_course = course.getText().toString();
 
                 if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
                     Toast.makeText(Register_Activity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
                 } else if (txt_password.length() < 6 ){
                     Toast.makeText(Register_Activity.this, "Password Must Be A Minimum of Six Characters", Toast.LENGTH_SHORT).show();
                 } else {
-                    register(txt_username, txt_email, txt_password);
+                    register(txt_username, txt_email, txt_password, txt_block, txt_flat, txt_course);
                 }
             }
         });
@@ -72,7 +78,7 @@ public class Register_Activity extends AppCompatActivity {
 
     }
 
-    private void register(final String username, String email, String password) {
+    private void register(final String username, String email, String password, String block, String flat, String course) {
 
         //Create a new account by passing the new user's email
         // address and password to createUserWithEmailAndPassword:
@@ -92,6 +98,9 @@ public class Register_Activity extends AppCompatActivity {
                             hashMap.put("username", username);
                             hashMap.put("imageURL", "default");
                             hashMap.put("status", "offline");
+                            hashMap.put("block", block);
+                            hashMap.put("flat", flat);
+                            hashMap.put("course", course);
                             hashMap.put("search", username.toLowerCase());
 
                             database.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
