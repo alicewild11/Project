@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Start_Activity extends AppCompatActivity {
@@ -18,6 +19,15 @@ public class Start_Activity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        //check if user is null
+        if (firebaseUser != null){
+            Intent intent = new Intent(Start_Activity.this, Main_Activity.class);
+            startActivity(intent);
+            finish();
+        }
 
 
     }
@@ -32,13 +42,14 @@ public class Start_Activity extends AppCompatActivity {
         login = findViewById(R.id.login);
         register = findViewById(R.id.register);
 
+        //when login button clicked start login activity
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Start_Activity.this, Login_Activity.class));
             }
         });
-
+        //when register button clicked start register activity
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
