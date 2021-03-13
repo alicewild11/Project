@@ -9,7 +9,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/profile_image"
-        android:src="@mipmap/ic_launcher">
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerVertical="true">
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
@@ -20,10 +21,101 @@
         android:layout_toRightOf="@id/profile_image"
         android:layout_toEndOf="@id/profile_image"
         android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"
         android:textSize="18sp"
-        android:textColor="#253237">
+        android:textColor="#253237"
+        android:fontFamily="sans-serif-light">
     </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/blocktitle"
+        android:text="Block:"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_below="@+id/username"
+        android:textSize="15sp"
+        android:textColor="#253237"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Block"
+        android:id="@+id/block"
+        android:layout_toRightOf="@+id/blocktitle"
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:textColor="#253237"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/flattitle"
+        android:text="Flat:"
+        android:layout_toRightOf="@id/block"
+        android:layout_below="@+id/username"
+        android:textSize="15sp"
+        android:textColor="#253237"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flat"
+        android:id="@+id/flat"
+        android:layout_below="@+id/username"
+        android:layout_toRightOf="@+id/flattitle"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:textColor="#253237"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course:"
+        android:id="@+id/coursetitle"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_below="@id/blocktitle"
+        android:textSize="15sp"
+        android:textColor="#253237"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Course"
+        android:id="@+id/course"
+        android:layout_toRightOf="@+id/coursetitle"
+        android:layout_below="@+id/blocktitle"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:textColor="#253237"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic">
+    </TextView>
+
+
+
+
 
 
 

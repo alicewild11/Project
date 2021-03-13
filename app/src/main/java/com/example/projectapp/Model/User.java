@@ -7,13 +7,21 @@ public class User {
     private String imageURL;
     private String status;
     private String search;
+    private String block;
+    private String flat;
+    private String course;
 
-    public User(String id, String username, String imageURL, String status, String search) {
+
+    public User(String id, String username, String imageURL, String status, String search, String block, String flat, String course) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.status = status;
         this.search = search;
+        this.block = block;
+        this.flat = flat;
+        this.course = course;
+
     }
 
     public User() {
@@ -59,4 +67,35 @@ public class User {
     public void setSearch(String search) {
         this.search = search;
     }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public void setBlock(String block) {
+        this.block = block;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public void setFlat(String Flat) {
+        this.flat = flat;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+
 }
+
+
+
+
+

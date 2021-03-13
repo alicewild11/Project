@@ -39,6 +39,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         final User user = mUsers.get(position);
         holder.username.setText(user.getUsername());
+        holder.block.setText(user.getBlock());
+        holder.flat.setText(user.getFlat());
+        holder.course.setText(user.getCourse());
         if (user.getImageURL().equals("default")){
             holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         } else {
@@ -55,6 +58,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView username;
+        public TextView block;
+        public TextView flat;
+        public TextView course;
         public ImageView profile_image;
 
         public ViewHolder (View itemView){
@@ -62,6 +68,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
             username = itemView.findViewById(R.id.username);
             profile_image = itemView.findViewById(R.id.profile_image);
+            block = itemView.findViewById(R.id.block);
+            flat = itemView.findViewById(R.id.flat);
+            course = itemView.findViewById(R.id.course);
+
         }
 
     }
