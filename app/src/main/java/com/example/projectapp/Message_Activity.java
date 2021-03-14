@@ -3,7 +3,10 @@ package com.example.projectapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,12 +22,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Message_Activity extends AppCompatActivity {
 
     CircleImageView profile_image;
     TextView username;
+    ImageButton btnsend;
+    EditText sendmessage;
 
     FirebaseUser fuser;
     DatabaseReference reference;
@@ -37,7 +44,7 @@ public class Message_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.navigationbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -45,18 +52,36 @@ public class Message_Activity extends AppCompatActivity {
         {
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+
                 finish();
             }
         });
 
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
+        btnsend = findViewById(R.id.btnsend);
+        sendmessage = findViewById(R.id.sendmessage);
 
         intent = getIntent();
         String userid = intent.getStringExtra("userid");
-
         fuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        btnsend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = sendmessage.getText().toString();
+                if (!msg.equals("")){
+                    sendMessage(fuser.getUid(), userid, msg);
+                } else {
+                    Toast.makeText(Message_Activity.this, "Please Enter A Message", Toast.LENGTH_SHORT).show();
+                }
+                sendmessage.setText("");
+            }
+        });
+
+
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -79,6 +104,19 @@ public class Message_Activity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    private void sendMessage(String sender, final String receiver, String message) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender", sender);
+        hashMap.put("receiver", receiver);
+        hashMap.put("message", message);
+
+        reference.child("Chats").push().setValue(hashMap);
 
     }
 }
