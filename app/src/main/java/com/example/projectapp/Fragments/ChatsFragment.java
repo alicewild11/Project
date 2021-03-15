@@ -50,13 +50,13 @@ public class ChatsFragment extends Fragment {
 
         mUsers = new ArrayList<>();
 
-        readUsers();
+        readChats();
 
         return view;
     }
 
 
-    private void readUsers(){
+    private void readChats(){
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
