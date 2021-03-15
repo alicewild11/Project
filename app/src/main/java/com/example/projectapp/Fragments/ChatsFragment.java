@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectapp.Adapter.UserAdapter;
-import com.example.projectapp.Model.Chat;
 import com.example.projectapp.Model.User;
 import com.example.projectapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChatsFragment<Chatlist> extends Fragment {
+public class ChatsFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
@@ -38,87 +38,51 @@ public class ChatsFragment<Chatlist> extends Fragment {
 
     private List<String> usersList;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_users, container, false);
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        mUsers = new ArrayList<>();
 
-        usersList = new ArrayList<>();
-
-        reference = FirebaseDatabase.getInstance().getReference("Chats").child(fuser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                usersList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Chat chat = snapshot.getValue(Chat.class);
-
-                    if (chat.getSender().equals((fuser.getUid()))) {
-                        usersList.add(chat.getReceiver());
-                    }
-                    if (chat.getReceiver().equals((fuser.getUid()))) {
-                        usersList.add(chat.getSender());
-                    }
-                }
-
-                readChats();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        readUsers();
 
         return view;
     }
 
-        private void readChats()
-    {
-            mUsers = new ArrayList<>();
 
-            reference = FirebaseDatabase.getInstance().getReference("users");
+    private void readUsers(){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    mUsers.clear();
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
 
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                        User user = snapshot1.getValue(User.class);
-
-                        for(String id: usersList){
-                            if(user.getId().equals(id)){
-                                if(mUsers.size() != 0){
-                                    for(User user1 : mUsers){
-                                        if(!user.getId().equals(user1.getId())){
-                                            mUsers.add(user);
-                                        }
-                                    }
-                                } else
-                                {
-                                    mUsers.add(user);
-                                }
-                            }
-                        }
+                    assert user != null;
+                    assert firebaseUser != null;
+                    if (!user.getId().equals(firebaseUser.getUid())) {
+                        mUsers.add(user);
                     }
-
-                    userAdapter = new UserAdapter(getContext(), mUsers, true);
-                    recyclerView.setAdapter(userAdapter);
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                userAdapter = new UserAdapter(getContext(), mUsers, false);
+                recyclerView.setAdapter(userAdapter);
+            }
 
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
 
+        });
+    }
 }
