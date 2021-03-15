@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectapp.Adapter.UserAdapter;
+import com.example.projectapp.Adapter.UserAdapter2;
 import com.example.projectapp.Model.User;
 import com.example.projectapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +30,7 @@ public class ChatsFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-    private UserAdapter userAdapter;
+    private UserAdapter2 userAdapter2;
     private List<User> mUsers;
 
     FirebaseUser fuser;
@@ -74,8 +74,8 @@ public class ChatsFragment extends Fragment {
                     }
                 }
 
-                userAdapter = new UserAdapter(getContext(), mUsers, false);
-                recyclerView.setAdapter(userAdapter);
+                userAdapter2 = new UserAdapter2(getContext(), mUsers, false);
+                recyclerView.setAdapter(userAdapter2);
             }
 
             @Override

@@ -38,7 +38,8 @@
         android:textColor="#253237"
         android:fontFamily="sans-serif-light"
         android:textStyle="bold"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:visibility="visible">
     </TextView>
 
     <TextView
@@ -52,7 +53,8 @@
         android:textSize="15sp"
         android:textColor="#253237"
         android:fontFamily="sans-serif-light"
-        android:textStyle="italic">
+        android:textStyle="italic"
+        android:visibility="visible">
     </TextView>
 
     <TextView
@@ -66,7 +68,8 @@
         android:textColor="#253237"
         android:fontFamily="sans-serif-light"
         android:textStyle="bold"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:visibility="visible">
     </TextView>
 
     <TextView
@@ -80,7 +83,8 @@
         android:textSize="15sp"
         android:textColor="#253237"
         android:fontFamily="sans-serif-light"
-        android:textStyle="italic">
+        android:textStyle="italic"
+        android:visibility="visible">
     </TextView>
 
     <TextView
@@ -95,7 +99,8 @@
         android:textColor="#253237"
         android:fontFamily="sans-serif-light"
         android:layout_marginLeft="10dp"
-        android:textStyle="bold">
+        android:textStyle="bold"
+        android:visibility="visible">
 
     </TextView>
 
@@ -110,7 +115,8 @@
         android:textSize="15sp"
         android:textColor="#253237"
         android:fontFamily="sans-serif-light"
-        android:textStyle="italic">
+        android:textStyle="italic"
+        android:visibility="visible">
     </TextView>
 
 
