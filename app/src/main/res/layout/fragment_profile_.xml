@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.Profile_Fragment">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/profile_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:src="@mipmap/ic_launcher">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:layout_below="@id/profile_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:textColor="#253237"
+                android:textSize="25sp"
+                android:id="@+id/username"
+                android:fontFamily="sans-serif-light">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Block:"
+                android:textStyle="bold"
+                android:layout_below="@id/username"
+                android:id="@+id/blocktitle"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#253237"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-light">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Block"
+                android:layout_below="@id/username"
+                android:layout_toRightOf="@id/blocktitle"
+                android:id="@+id/block"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#253237"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-light">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Flat:"
+                android:textStyle="bold"
+                android:layout_below="@id/blocktitle"
+                android:id="@+id/flattitle"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#253237"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-light">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Flat"
+                android:layout_below="@id/block"
+                android:layout_toRightOf="@id/flattitle"
+                android:id="@+id/flat"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#253237"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-light">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Course:"
+                android:textStyle="bold"
+                android:layout_below="@id/flattitle"
+                android:id="@+id/coursetitle"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#253237"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-light">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Course"
+                android:layout_below="@id/flat"
+                android:layout_toRightOf="@id/coursetitle"
+                android:id="@+id/course"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#253237"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-light">
+            </TextView>
+
+        </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>

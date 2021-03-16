@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.projectapp.Fragments.ChatsFragment;
+import com.example.projectapp.Fragments.Profile_Fragment;
 import com.example.projectapp.Fragments.UsersFragment;
 import com.example.projectapp.Model.User;
 import com.google.android.material.tabs.TabLayout;
@@ -82,6 +83,7 @@ public class Main_Activity extends AppCompatActivity {
 
         viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
         viewPagerAdapter.addFragment(new UsersFragment(), "Users");
+        viewPagerAdapter.addFragment(new Profile_Fragment(),"Profile");
 
         viewpager.setAdapter(viewPagerAdapter);
 
