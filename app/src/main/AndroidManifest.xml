@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectApp">
-        <activity android:name=".Message_Activity"></activity>
+        <activity android:name=".ResetPassword"
+            android:parentActivityName=".Login_Activity"></activity>
+        <activity android:name=".Message_Activity" />
         <activity android:name=".Start_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +30,7 @@
         <activity
             android:name=".Login_Activity"
             android:parentActivityName=".Start_Activity" />
+
     </application>
 
 </manifest>

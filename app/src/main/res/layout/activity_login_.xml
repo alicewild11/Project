@@ -52,6 +52,17 @@
             android:textColor="#253237"
             android:fontFamily="sans-serif-light"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Forgot your password?"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="end"
+            android:textStyle="italic"
+            android:fontFamily="sans-serif-light"
+            android:id="@+id/forgot_password"
+            android:textColor="@color/colorPrimaryDark"/>
 
 
 
