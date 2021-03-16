@@ -5,18 +5,16 @@ public class User {
     private String id;
     private String username;
     private String imageURL;
-    private String status;
     private String search;
     private String block;
     private String flat;
     private String course;
 
 
-    public User(String id, String username, String imageURL, String status, String search, String block, String flat, String course) {
+    public User(String id, String username, String imageURL, String search, String block, String flat, String course) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
-        this.status = status;
         this.search = search;
         this.block = block;
         this.flat = flat;
@@ -50,14 +48,6 @@ public class User {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getSearch() {
