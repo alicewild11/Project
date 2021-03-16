@@ -6,8 +6,18 @@
     android:background="@color/white"
     tools:context=".Fragments.UsersFragment">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="Search"
+        android:id="@+id/search"
+        android:textColorHint="#253237"
+        android:fontFamily="sans-serif-light"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
+        android:layout_below="@id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>

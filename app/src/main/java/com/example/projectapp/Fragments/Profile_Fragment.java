@@ -74,6 +74,9 @@ public class Profile_Fragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    return;
+                }
                 User user = snapshot.getValue(User.class);
                 username.setText(user.getUsername());
                 flat.setText(user.getFlat());
