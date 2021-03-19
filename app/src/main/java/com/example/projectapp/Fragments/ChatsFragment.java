@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectapp.Adapter.UserAdapter2;
+import com.example.projectapp.Model.Chat;
 import com.example.projectapp.Model.User;
 import com.example.projectapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,17 +49,48 @@ public class ChatsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mUsers = new ArrayList<>();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-        readChats();
+        usersList = new ArrayList<>();
+
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                usersList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chat chat = snapshot.getValue(Chat.class);
+
+                    assert chat != null;
+                    if(chat.getSender().equals(fuser.getUid())){
+                        usersList.add(chat.getReceiver());
+                    }
+                    if(chat.getReceiver().equals(fuser.getUid())){
+                        usersList.add(chat.getSender());
+                    }
+                }
+
+                readChats();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         return view;
     }
 
 
     private void readChats(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        mUsers = new ArrayList<>();
+
+        reference = FirebaseDatabase.getInstance().getReference("Users");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,10 +99,12 @@ public class ChatsFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
 
-                    assert user != null;
-                    assert firebaseUser != null;
-                    if (!user.getId().equals(firebaseUser.getUid())) {
-                        mUsers.add(user);
+                    for(String id: usersList){
+                        assert user != null;
+                        if(user.getId().equals(id)){
+                            mUsers.add(user);
+
+                        }
                     }
                 }
 
