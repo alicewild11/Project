@@ -78,6 +78,7 @@ public class Profile_Fragment extends Fragment {
                     return;
                 }
                 User user = snapshot.getValue(User.class);
+                assert user != null;
                 username.setText(user.getUsername());
                 flat.setText(user.getFlat());
                 block.setText(user.getBlock());
@@ -85,7 +86,7 @@ public class Profile_Fragment extends Fragment {
                 if(user.getImageURL().equals("default")){
                     image_profile.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(getContext()).load(user.getImageURL());
+                    Glide.with(getContext()).load(user.getImageURL()).into(image_profile);
                 }
 
 
