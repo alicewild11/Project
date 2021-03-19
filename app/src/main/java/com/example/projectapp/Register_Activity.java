@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Register_Activity extends AppCompatActivity {
 
@@ -60,7 +61,7 @@ public class Register_Activity extends AppCompatActivity {
                 String txt_username = username.getText().toString();
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
-                String txt_block = block.getText().toString();
+                String txt_block = Objects.requireNonNull(block.getText()).toString();
                 String txt_flat = flat.getText().toString();
                 String txt_course = course.getText().toString();
 
