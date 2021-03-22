@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.projectapp.Fragments.ChatsFragment;
 import com.example.projectapp.Fragments.Profile_Fragment;
 import com.example.projectapp.Fragments.UsersFragment;
+import com.example.projectapp.Model.Chat;
 import com.example.projectapp.Model.User;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,20 +81,48 @@ public class Main_Activity extends AppCompatActivity {
             }
         });
 
-        TabLayout tabLayout = findViewById(R.id.layout);
-        ViewPager viewpager = findViewById(R.id.viewpager);
+        final TabLayout tabLayout = findViewById(R.id.layout);
+        final ViewPager viewPager = findViewById(R.id.viewpager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
-        viewPagerAdapter.addFragment(new UsersFragment(), "Users");
-        viewPagerAdapter.addFragment(new Profile_Fragment(),"Profile");
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+                int unread;
+                unread = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chat chat = snapshot.getValue(Chat.class);
+                    if (chat.getReceiver().equals(firebaseUser.getUid()) && !chat.isIsseen()){
+                        unread++;
+                    }
+                }
 
-        viewpager.setAdapter(viewPagerAdapter);
+                if (unread == 0){
+                    viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
+                } else {
+                    viewPagerAdapter.addFragment(new ChatsFragment(), "("+unread+") Chats");
+                }
 
-        tabLayout.setupWithViewPager(viewpager);
+                viewPagerAdapter.addFragment(new UsersFragment(), "Users");
+                viewPagerAdapter.addFragment(new Profile_Fragment(), "Profile");
+
+                viewPager.setAdapter(viewPagerAdapter);
+
+                tabLayout.setupWithViewPager(viewPager);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
