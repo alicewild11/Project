@@ -80,7 +80,6 @@ public class Profile_Fragment extends Fragment {
                 User user = snapshot.getValue(User.class);
                 assert user != null;
                 username.setText(user.getUsername());
-                flat.setText(user.getFlat());
                 block.setText(user.getBlock());
                 course.setText(user.getCourse());
                 if(user.getImageURL().equals("default")){

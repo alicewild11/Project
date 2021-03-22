@@ -60,36 +60,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/flattitle"
-        android:text="Flat:"
-        android:layout_toRightOf="@id/block"
-        android:layout_below="@+id/username"
-        android:textSize="15sp"
-        android:textColor="#253237"
-        android:fontFamily="sans-serif-light"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:visibility="visible">
-    </TextView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flat"
-        android:id="@+id/flat"
-        android:layout_below="@+id/username"
-        android:layout_toRightOf="@+id/flattitle"
-        android:layout_marginLeft="10dp"
-        android:textSize="15sp"
-        android:textColor="#253237"
-        android:fontFamily="sans-serif-light"
-        android:textStyle="italic"
-        android:visibility="visible">
-    </TextView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Course:"
         android:id="@+id/coursetitle"
         android:layout_toRightOf="@id/profile_image"

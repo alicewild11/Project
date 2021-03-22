@@ -32,25 +32,12 @@
                 android:id="@+id/username"
                 android:fontFamily="sans-serif-light">
             </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Block:"
-                android:textStyle="bold"
-                android:layout_below="@id/username"
-                android:id="@+id/blocktitle"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="#253237"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-light">
-            </TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Block"
                 android:layout_below="@id/username"
-                android:layout_toRightOf="@id/blocktitle"
                 android:id="@+id/block"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
@@ -58,63 +45,23 @@
                 android:textColor="#253237"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-light"
-                android:textStyle="italic">
+
+                android:layout_centerHorizontal="true">
             </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flat:"
-                android:textStyle="bold"
-                android:layout_below="@id/blocktitle"
-                android:id="@+id/flattitle"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="#253237"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-light">
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Flat"
-                android:layout_below="@id/block"
-                android:layout_toRightOf="@id/flattitle"
-                android:id="@+id/flat"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="#253237"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-light"
-                android:textStyle="italic">
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Course:"
-                android:textStyle="bold"
-                android:layout_below="@id/flattitle"
-                android:id="@+id/coursetitle"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="#253237"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-light">
-            </TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Course"
-                android:layout_below="@id/flat"
-                android:layout_toRightOf="@id/coursetitle"
+                android:layout_below="@id/block"
                 android:id="@+id/course"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:textColor="#253237"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-light"
-                android:textStyle="italic">
+                android:layout_centerHorizontal="true">
             </TextView>
 
         </RelativeLayout>

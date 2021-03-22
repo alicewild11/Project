@@ -58,14 +58,14 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
 
                     assert chat != null;
-                    if(chat.getSender().equals(fuser.getUid())){
+                    if (chat.getSender().equals(fuser.getUid())) {
                         usersList.add(chat.getReceiver());
                     }
-                    if(chat.getReceiver().equals(fuser.getUid())){
+                    if (chat.getReceiver().equals(fuser.getUid())) {
                         usersList.add(chat.getSender());
                     }
                 }
@@ -81,12 +81,11 @@ public class ChatsFragment extends Fragment {
         });
 
 
-
         return view;
     }
 
 
-    private void readChats(){
+    private void readChats() {
 
         mUsers = new ArrayList<>();
 
@@ -99,12 +98,10 @@ public class ChatsFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
 
-                    for(String id: usersList){
-                        assert user != null;
-                        if(user.getId().equals(id)){
-                            mUsers.add(user);
-
-                        }
+                    assert user != null;
+                    assert fuser != null;
+                    if (!user.getId().equals(fuser.getUid())) {
+                        mUsers.add(user);
                     }
                 }
 
@@ -112,11 +109,11 @@ public class ChatsFragment extends Fragment {
                 recyclerView.setAdapter(userAdapter2);
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
     }
 }
