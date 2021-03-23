@@ -66,10 +66,13 @@ public class Register_Activity extends AppCompatActivity {
                 String txt_course = course.getText().toString();
 
                 if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
+                    //if any of the username, email or password are empty then display message ensuring all fields should be filled
                     Toast.makeText(Register_Activity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
                 } else if (txt_password.length() < 6 ){
+                    //if the password is less than 6 characters display a message ensuring the password is a minimum of six characters
                     Toast.makeText(Register_Activity.this, "Password Must Be A Minimum of Six Characters", Toast.LENGTH_SHORT).show();
                 } else {
+                    //if other statements are not true then store following fields.
                     register(txt_username, txt_email, txt_password, txt_block, txt_flat, txt_course);
                 }
             }
