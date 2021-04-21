@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class Start_Activity extends AppCompatActivity {
 
     Button login, register;
-
     FirebaseUser firebaseUser;
 
     @Override
@@ -22,7 +21,7 @@ public class Start_Activity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //check if user is null
+        //check if user is null, if not null load main activity
         if (firebaseUser != null){
             Intent intent = new Intent(Start_Activity.this, Main_Activity.class);
             startActivity(intent);
@@ -31,13 +30,10 @@ public class Start_Activity extends AppCompatActivity {
 
 
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
-
 
         login = findViewById(R.id.login);
         register = findViewById(R.id.register);

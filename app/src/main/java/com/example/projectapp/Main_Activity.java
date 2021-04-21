@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.projectapp.Fragments.ChatsFragment;
-import com.example.projectapp.Fragments.Profile_Fragment;
 import com.example.projectapp.Fragments.UsersFragment;
-import com.example.projectapp.Model.Chat;
 import com.example.projectapp.Model.User;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,25 +36,46 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Main_Activity extends AppCompatActivity {
 
     CircleImageView profile_image;
-    TextView username;
+    TextView username,block, flat, course;
+
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_);
 
+        //find toolbar inside the activity layout
         Toolbar toolbar = findViewById(R.id.navigationbar);
+        //sets the toolbar to act as an action bar
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+
+
 
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
 
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Main_Activity.this, Profile.class));
+            }
+        });
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Main_Activity.this, Profile.class));
+            }
+        });
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,9 +90,11 @@ public class Main_Activity extends AppCompatActivity {
                     profile_image.setImageResource(R.mipmap.ic_launcher);
                 } else {
 
-                    //change this
+
                     Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
+
+
             }
 
             @Override
@@ -85,68 +107,46 @@ public class Main_Activity extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.viewpager);
 
 
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-                int unread;
-                unread = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Chat chat = snapshot.getValue(Chat.class);
-                    if (chat.getReceiver().equals(firebaseUser.getUid()) && !chat.isIsseen()){
-                        unread++;
-                    }
-                }
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-                if (unread == 0){
-                    viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
-                } else {
-                    viewPagerAdapter.addFragment(new ChatsFragment(), "("+unread+") Chats");
-                }
 
-                viewPagerAdapter.addFragment(new UsersFragment(), "Users");
-                viewPagerAdapter.addFragment(new Profile_Fragment(), "Profile");
+        viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
+        viewPagerAdapter.addFragment(new UsersFragment(), "Users");
+        //viewPagerAdapter.addFragment(new Profile_Fragment(), "Profile");
 
-                viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setAdapter(viewPagerAdapter);
 
-                tabLayout.setupWithViewPager(viewPager);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //inflating menu; adding items to the action bar
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(Main_Activity.this, Start_Activity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                return true;
+        if (item.getItemId() == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(Main_Activity.this, Start_Activity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            return true;
+        }
+        if(item.getItemId()== R.id.profile){
+            startActivity(new Intent(Main_Activity.this, Profile.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            return true;
         }
 
         return false;
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String> titles;
+        private final ArrayList<Fragment> fragments;
+        private final ArrayList<String> titles;
 
         ViewPagerAdapter(FragmentManager fm){
             super(fm);
@@ -154,13 +154,16 @@ public class Main_Activity extends AppCompatActivity {
             this.titles = new ArrayList<>();
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
+
             return fragments.get(position);
         }
 
         @Override
         public int getCount() {
+
             return fragments.size();
         }
 
@@ -172,8 +175,10 @@ public class Main_Activity extends AppCompatActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
+
             return titles.get(position);
         }
     }
+
 }
 

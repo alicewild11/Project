@@ -26,45 +26,46 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class UserAdapter2 extends RecyclerView.Adapter<UserAdapter2.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<User> mUsers;
+    private Context Context;
+    private List<User> Users;
 
     String theLastMessage;
 
 
-    public UserAdapter2(Context mContext, List<User> mUsers, boolean b) {
-        this.mUsers = mUsers;
-        this.mContext = mContext;
+    public ChatAdapter(Context Context, List<User> Users, boolean b) {
+        this.Users = Users;
+        this.Context = Context;
 
 
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.chatlist, parent, false);
-        return new UserAdapter2.ViewHolder(view);
+        View view = LayoutInflater.from(Context).inflate(R.layout.chatlist, parent, false);
+        return new ChatAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final User user = mUsers.get(position);
+        final User user = Users.get(position);
         holder.username.setText(user.getUsername());
         lastMessage(user.getId(), holder.last_message);
         if (user.getImageURL().equals("default")){
             holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         } else {
-            Glide.with(mContext).load(user.getImageURL()).into(holder.profile_image);
+            Glide.with(Context).load(user.getImageURL()).into(holder.profile_image);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Message_Activity.class);
+                Intent intent = new Intent(Context, Message_Activity.class);
                 intent.putExtra("userid", user.getId());
-                mContext.startActivity(intent);
+                Context.startActivity(intent);
             }
         });
 
@@ -73,7 +74,7 @@ public class UserAdapter2 extends RecyclerView.Adapter<UserAdapter2.ViewHolder> 
     @Override
     public int getItemCount() {
 
-        return mUsers.size();
+        return Users.size();
     }
 
 

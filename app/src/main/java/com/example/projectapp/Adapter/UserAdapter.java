@@ -20,13 +20,13 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<User> mUsers;
+    private Context Context;
+    private List<User> Users;
 
 
-    public UserAdapter(Context mContext, List<User> mUsers, boolean b) {
-        this.mUsers = mUsers;
-        this.mContext = mContext;
+    public UserAdapter(Context Context, List<User> Users, boolean b) {
+        this.Users = Users;
+        this.Context = Context;
 
 
     }
@@ -34,29 +34,29 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.userlist, parent, false);
+        View view = LayoutInflater.from(Context).inflate(R.layout.userlist, parent, false);
         return new UserAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final User user = mUsers.get(position);
+        final User user = Users.get(position);
         holder.username.setText(user.getUsername());
         holder.block.setText(user.getBlock());
         holder.course.setText(user.getCourse());
         if (user.getImageURL().equals("default")){
             holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         } else {
-            Glide.with(mContext).load(user.getImageURL()).into(holder.profile_image);
+            Glide.with(Context).load(user.getImageURL()).into(holder.profile_image);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, Message_Activity.class);
+                Intent intent = new Intent(Context, Message_Activity.class);
                 intent.putExtra("userid", user.getId());
-                mContext.startActivity(intent);
+                Context.startActivity(intent);
             }
         });
 
@@ -65,7 +65,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
 
-        return mUsers.size();
+        return Users.size();
     }
 
 

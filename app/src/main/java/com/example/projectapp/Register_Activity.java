@@ -40,6 +40,7 @@ public class Register_Activity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.navigationbar);
         setSupportActionBar(toolbar);
+        //set tile of toolbar to register
         getSupportActionBar().setTitle("Register");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

@@ -6,6 +6,7 @@
     android:id="@+id/navigationbar"
     android:backgroundTint="@color/colorPrimary"
     android:background="@color/colorPrimaryDark"
-    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/MenuStyle">
+    android:theme="@style/ToolbarTheme"
+    app:popupTheme="@style/MenuStyle"
+    app:titleTextAppearance="@style/Toolbar.TitleText">
     ></androidx.appcompat.widget.Toolbar>

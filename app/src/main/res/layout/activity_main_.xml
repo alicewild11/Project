@@ -19,22 +19,30 @@
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/MenuStyle">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/profile_image"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/username"
-            android:textSize="18sp"
-            android:layout_marginLeft="25dp"
-            android:textColor="#253237"
-            android:fontFamily="sans-serif-light"
-            android:layout_marginStart="25dp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:id="@+id/profile_image"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/username"
+                    android:textSize="18sp"
+                    android:layout_toEndOf="@id/profile_image"
+                    android:textColor="#253237"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_toRightOf="@id/profile_image"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
+
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout"

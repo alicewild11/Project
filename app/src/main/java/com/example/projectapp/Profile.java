@@ -1,4 +1,4 @@
-package com.example.projectapp.Fragments;
+package com.example.projectapp;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -6,20 +6,17 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.projectapp.Model.User;
-import com.example.projectapp.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,8 +37,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-public class Profile_Fragment extends Fragment {
+public class Profile extends AppCompatActivity {
 
     CircleImageView image_profile;
     TextView username, block, flat, course;
@@ -50,23 +46,33 @@ public class Profile_Fragment extends Fragment {
     FirebaseUser fuser;
 
     StorageReference storageReference;
-    private static final int IMAGE_REQUEST = 1;
-    private Uri imageUri;
-    private StorageTask uploadTask;
 
-    @Nullable
+    ProgressDialog pd;
+
+    int PICK_IMAGE = 1;
+    Uri filePath;
+    private StorageTask<UploadTask.TaskSnapshot> uploadTask;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
-        View view = inflater.inflate(R.layout.fragment_profile_, container, false);
+        Toolbar toolbar = findViewById(R.id.navigationbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        image_profile = view.findViewById(R.id.profile_image);
-        username = view.findViewById(R.id.username);
-        block = view.findViewById(R.id.block);
-        flat = view.findViewById(R.id.flat);
-        course= view.findViewById(R.id.course);
+        username = findViewById(R.id.username);
+        block = findViewById(R.id.block);
+        flat = findViewById(R.id.flat);
+        course = findViewById(R.id.course);
+        image_profile = findViewById(R.id.profile_image);
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
+
+
+
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
@@ -82,10 +88,10 @@ public class Profile_Fragment extends Fragment {
                 username.setText(user.getUsername());
                 block.setText(user.getBlock());
                 course.setText(user.getCourse());
-                if(user.getImageURL().equals("default")){
+                if (user.getImageURL().equals("default")) {
                     image_profile.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(getContext()).load(user.getImageURL()).into(image_profile);
+                    Glide.with(Profile.this).load(user.getImageURL()).into(image_profile);
                 }
 
 
@@ -101,36 +107,37 @@ public class Profile_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 openImage();
+
             }
+
+
         });
-
-
-        return view;
     }
 
-    private void openImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
+
+    private void openImage()
+    {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, PICK_IMAGE);
     }
 
     private String getFileExtension(Uri uri){
-        ContentResolver contentResolver = getContext().getContentResolver();
+        ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-
     private void uploadImage(){
-        final ProgressDialog pd = new ProgressDialog(getContext());
+        final ProgressDialog pd = new ProgressDialog(Profile.this);
         pd.setMessage("Uploading");
         pd.show();
 
-        if (imageUri != null){
-            final  StorageReference fileReference = storageReference.child(System.currentTimeMillis()
-                    +"."+getFileExtension(imageUri));
+        if (filePath != null){
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()
+                    +"."+getFileExtension(filePath));
 
-            uploadTask = fileReference.putFile(imageUri);
+            uploadTask = fileReference.putFile(filePath);
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -154,19 +161,19 @@ public class Profile_Fragment extends Fragment {
 
                         pd.dismiss();
                     } else {
-                        Toast.makeText(getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Profile.this, "Failed!", Toast.LENGTH_SHORT).show();
                         pd.dismiss();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Profile.this,e.getMessage(), Toast.LENGTH_SHORT).show();
                     pd.dismiss();
                 }
             });
         } else {
-            Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Profile.this, "No image selected", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -174,16 +181,17 @@ public class Profile_Fragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK
                 && data != null && data.getData() != null){
-            imageUri = data.getData();
+            filePath = data.getData();
 
             if (uploadTask != null && uploadTask.isInProgress()){
-                Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Profile.this,"Upload in progress", Toast.LENGTH_SHORT).show();
             } else {
                 uploadImage();
             }
         }
     }
+
 
 }

@@ -10,7 +10,7 @@
     <!--including the navigation bar on the register page-->
     <include
         android:id="@+id/navigationbar"
-        layout="@layout/navigationbar"/>
+        layout="@layout/toolbar"/>
     
     <!--linear layout: view group that aligns
     all children in a single direction, vertically or horizontally-->
