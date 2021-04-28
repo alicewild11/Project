@@ -106,6 +106,7 @@ public class Profile extends AppCompatActivity {
         image_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //call open image method
                 openImage();
 
             }
@@ -128,6 +129,7 @@ public class Profile extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+    //upload image, choosing image and uploading it into the database
     private void uploadImage(){
         final ProgressDialog pd = new ProgressDialog(Profile.this);
         pd.setMessage("Uploading");
@@ -155,12 +157,15 @@ public class Profile extends AppCompatActivity {
                         String mUri = downloadUri.toString();
 
                         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+                        //store image url in the image url
                         HashMap<String, Object> map = new HashMap<>();
                         map.put("imageURL", ""+mUri);
                         reference.updateChildren(map);
 
+                        //dismiss the dialog
                         pd.dismiss();
                     } else {
+                        //set view message to failed
                         Toast.makeText(Profile.this, "Failed!", Toast.LENGTH_SHORT).show();
                         pd.dismiss();
                     }
@@ -188,6 +193,7 @@ public class Profile extends AppCompatActivity {
             if (uploadTask != null && uploadTask.isInProgress()){
                 Toast.makeText(Profile.this,"Upload in progress", Toast.LENGTH_SHORT).show();
             } else {
+                //call method
                 uploadImage();
             }
         }

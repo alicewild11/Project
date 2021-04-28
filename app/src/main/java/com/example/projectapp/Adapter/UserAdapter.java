@@ -51,6 +51,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             Glide.with(Context).load(user.getImageURL()).into(holder.profile_image);
         }
 
+        //on click open meessage activity
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     }
 
+    //get number of elements of in the array list
     @Override
     public int getItemCount() {
 

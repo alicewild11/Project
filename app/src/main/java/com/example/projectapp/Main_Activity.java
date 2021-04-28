@@ -64,6 +64,7 @@ public class Main_Activity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
+        //on click open profile activity
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,8 +90,7 @@ public class Main_Activity extends AppCompatActivity {
                 if (user.getImageURL().equals("default")) {
                     profile_image.setImageResource(R.mipmap.ic_launcher);
                 } else {
-
-
+                    //load image into profile image from the database
                     Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
 
@@ -112,10 +112,9 @@ public class Main_Activity extends AppCompatActivity {
 
         viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
         viewPagerAdapter.addFragment(new UsersFragment(), "Users");
-        //viewPagerAdapter.addFragment(new Profile_Fragment(), "Profile");
+
 
         viewPager.setAdapter(viewPagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
 
     }
@@ -130,11 +129,13 @@ public class Main_Activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //if logout is clicked
         if (item.getItemId() == R.id.logout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(Main_Activity.this, Start_Activity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             return true;
         }
+        //if profile is clicked
         if(item.getItemId()== R.id.profile){
             startActivity(new Intent(Main_Activity.this, Profile.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             return true;
@@ -145,7 +146,9 @@ public class Main_Activity extends AppCompatActivity {
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
 
+        //create array list fragrments
         private final ArrayList<Fragment> fragments;
+        //create array list titles
         private final ArrayList<String> titles;
 
         ViewPagerAdapter(FragmentManager fm){
@@ -154,6 +157,7 @@ public class Main_Activity extends AppCompatActivity {
             this.titles = new ArrayList<>();
         }
 
+
         @NonNull
         @Override
         public Fragment getItem(int position) {
@@ -161,6 +165,7 @@ public class Main_Activity extends AppCompatActivity {
             return fragments.get(position);
         }
 
+        //get number of elements in array list
         @Override
         public int getCount() {
 
@@ -168,7 +173,9 @@ public class Main_Activity extends AppCompatActivity {
         }
 
         public void addFragment(Fragment fragment, String title){
+            //add fragment
             fragments.add(fragment);
+            //add title
             titles.add(title);
         }
 

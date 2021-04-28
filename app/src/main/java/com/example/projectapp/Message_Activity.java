@@ -95,8 +95,10 @@ public class Message_Activity extends AppCompatActivity {
                 if (!msg.equals("")){
                     sendMessage(fuser.getUid(), userid, msg);
                 } else {
+                    //set view with message to prompt users to send message
                     Toast.makeText(Message_Activity.this, "Please Enter A Message", Toast.LENGTH_SHORT).show();
                 }
+
                 sendmessage.setText("");
             }
         });
@@ -116,6 +118,7 @@ public class Message_Activity extends AppCompatActivity {
                     Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
 
+                //call read message
                 readMesagges(fuser.getUid(), userid, user.getImageURL());
             }
 
@@ -125,6 +128,7 @@ public class Message_Activity extends AppCompatActivity {
             }
         });
 
+        //call seen message method
         seenMessage(userid);
 
 
@@ -138,6 +142,7 @@ public class Message_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
+                    //if reciever equals to id and sender equals id set isseen to true in database
                     if (chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid)) {
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isseen", true);
@@ -168,17 +173,21 @@ public class Message_Activity extends AppCompatActivity {
     }
 
     private void readMesagges(final String myid, final String userid, final String imageurl){
+        //create new array list
         mchat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //clear array list
                 mchat.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    //used to marshall the data contained in this snapshot into chat class
                     Chat chat = snapshot.getValue(Chat.class);
                     if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
                             chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
+                        //add chat to array list
                         mchat.add(chat);
                     }
 

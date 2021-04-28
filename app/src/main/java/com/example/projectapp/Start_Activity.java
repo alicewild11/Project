@@ -45,7 +45,7 @@ public class Start_Activity extends AppCompatActivity {
                 startActivity(new Intent(Start_Activity.this, Login_Activity.class));
             }
         });
-        //when register button clicked start register activity
+        //register button clicked start register activity
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

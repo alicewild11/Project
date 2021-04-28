@@ -57,6 +57,7 @@ public class Login_Activity extends AppCompatActivity {
                 String txt_password = password.getText().toString();
 
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
+                    //set a view with a message prompting to fill all fields
                     Toast.makeText(Login_Activity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -67,9 +68,11 @@ public class Login_Activity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Intent intent = new Intent(Login_Activity.this, Main_Activity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        //start activity man
                                         startActivity(intent);
                                         finish();
                                     } else {
+                                        //set a view with a message of failed authentication
                                         Toast.makeText(Login_Activity.this, "Authentication Failed!", Toast.LENGTH_SHORT).show();
                                     }
                                 }

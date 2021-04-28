@@ -33,7 +33,7 @@ public class UsersFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-    private List<User> mUsers;
+    private List<User> users;
 
     EditText search;
 
@@ -47,7 +47,8 @@ public class UsersFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mUsers = new ArrayList<>();
+        //create a new array list called users
+        users = new ArrayList<>();
 
         readUsers();
 
@@ -60,6 +61,7 @@ public class UsersFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //call searchUsers method
                 searchUsers(charSequence.toString().toLowerCase());
             }
 
@@ -82,18 +84,18 @@ public class UsersFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                mUsers.clear();
+                users.clear();
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
 
                     assert user != null;
                     assert fuser != null;
                     if (!user.getId().equals(fuser.getUid())){
-                        mUsers.add(user);
+                        users.add(user);
                     }
                 }
 
-                userAdapter = new UserAdapter(getContext(), mUsers, false);
+                userAdapter = new UserAdapter(getContext(), users, false);
                 recyclerView.setAdapter(userAdapter);
             }
 
@@ -112,18 +114,19 @@ public class UsersFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (search.getText().toString().equals("")) {
-                    mUsers.clear();
+                    users.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        //used to marshall the data contained in this snapshot into user class
                         User user = snapshot.getValue(User.class);
 
                         assert user != null;
                         assert firebaseUser != null;
                         if (!user.getId().equals(firebaseUser.getUid())) {
-                            mUsers.add(user);
+                            users.add(user);
                         }
                     }
 
-                    userAdapter = new UserAdapter(getContext(), mUsers, false);
+                    userAdapter = new UserAdapter(getContext(), users, false);
                     recyclerView.setAdapter(userAdapter);
                 }
             }

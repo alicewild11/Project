@@ -98,6 +98,7 @@ public class Register_Activity extends AppCompatActivity {
 
                             database = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
+                            //storing the appropriate information in the database
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id", userid);
                             hashMap.put("username", username);

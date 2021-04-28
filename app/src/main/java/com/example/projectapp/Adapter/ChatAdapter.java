@@ -55,11 +55,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         holder.username.setText(user.getUsername());
         lastMessage(user.getId(), holder.last_message);
         if (user.getImageURL().equals("default")){
+            //if default set image
             holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         } else {
+            //if not load user image url from database into profile image
             Glide.with(Context).load(user.getImageURL()).into(holder.profile_image);
         }
 
+        //on item view click open message activity
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,9 +74,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     }
 
+
     @Override
     public int getItemCount() {
 
+        //find out how many elements in the array list
         return Users.size();
     }
 
@@ -108,21 +113,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     if (firebaseUser != null && chat != null) {
                         if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid) ||
                                 chat.getReceiver().equals(userid) && chat.getSender().equals(firebaseUser.getUid())) {
+                            //store the message in the last message variable
                             theLastMessage = chat.getMessage();
                         }
                     }
                 }
 
-                switch (theLastMessage){
-                    case  "default":
-                        last_msg.setText("No Message");
-                        break;
-
-                    default:
-                        last_msg.setText(theLastMessage);
-                        break;
+                if ("default".equals(theLastMessage)) {
+                    //if the last message is default set text as no message
+                    last_msg.setText("No Message");
+                } else {
+                    //else set text to the message stored in the last message variable
+                    last_msg.setText(theLastMessage);
                 }
-
+                //store variable to default
                 theLastMessage = "default";
             }
 
@@ -132,8 +136,5 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             }
         });
     }
-
-
-
 }
 

@@ -42,10 +42,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == RIGHT) {
+            //if the view type right set the layout to chat right
             View view = LayoutInflater.from(Context).inflate(R.layout.chatright, parent, false);
             return new MessageAdapter.ViewHolder(view);
         }else
         {
+            //if the view type else set the layout to left
             View view = LayoutInflater.from(Context).inflate(R.layout.chatleft, parent, false);
             return new MessageAdapter.ViewHolder(view);
         }
@@ -66,22 +68,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         if (position == Chat.size()-1){
             if (chat.isIsseen()){
+                //set text to seen
                 holder.txt_seen.setText("Seen");
             } else {
+                //set text to delivered
                 holder.txt_seen.setText("Delivered");
             }
         } else {
             holder.txt_seen.setVisibility(View.GONE);
         }
-
     }
 
+    //get the amount of elements in the array list
     @Override
     public int getItemCount() {
 
         return Chat.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView message;
@@ -94,10 +97,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             message = itemView.findViewById(R.id.message);
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_seen = itemView.findViewById(R.id.txt_seen);
-
-
         }
-
     }
 
     @Override

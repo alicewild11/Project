@@ -32,12 +32,13 @@ public class ChatsFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private ChatAdapter chatAdapter;
-    private List<User> mUsers;
+    private List<User> users;
 
     FirebaseUser fuser;
     DatabaseReference reference;
 
-    private List<String> usersList;
+
+    private List<String> chatList;
 
 
     @Nullable
@@ -51,28 +52,36 @@ public class ChatsFragment extends Fragment {
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-        usersList = new ArrayList<>();
+        //create an array list called userList
+        chatList = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                usersList.clear();
+                chatList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    //used to marshall the data contained in this snapshot into chat class
                     Chat chat = snapshot.getValue(Chat.class);
-
                     assert chat != null;
+                    //if the get sender is equal to the fusers id
                     if (chat.getSender().equals(fuser.getUid())) {
-                        usersList.add(chat.getReceiver());
+                        //add the reciever to the userList array
+                        chatList.add(chat.getReceiver());
                     }
+                    //if the get reciever is equal to the fuser id
                     if (chat.getReceiver().equals(fuser.getUid())) {
-                        usersList.add(chat.getSender());
+                        //add the sender to the userList array
+                        chatList.add(chat.getSender());
                     }
                 }
 
+                //call readChats method
                 readChats();
 
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -82,30 +91,35 @@ public class ChatsFragment extends Fragment {
 
 
         return view;
+
+
     }
 
 
     private void readChats() {
 
-        mUsers = new ArrayList<>();
+
+        //create an array list called users
+        users = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUsers.clear();
+                users.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    //used to marshall the data contained in this snapshot into user class
                     User user = snapshot.getValue(User.class);
 
                     assert user != null;
                     assert fuser != null;
                     if (!user.getId().equals(fuser.getUid())) {
-                        mUsers.add(user);
+                        users.add(user);
                     }
                 }
 
-                chatAdapter = new ChatAdapter(getContext(), mUsers, false);
+                chatAdapter = new ChatAdapter(getContext(), users, false);
                 recyclerView.setAdapter(chatAdapter);
             }
 
@@ -116,4 +130,6 @@ public class ChatsFragment extends Fragment {
             }
         });
     }
+
+
 }
